@@ -1,4 +1,12 @@
 #pragma once
+#include <vector>
+using namespace std; // polluting the namespace..
+struct point
+{
+	point(int _x, int _y) :x(_x), y(_y)
+	{}
+	int x, y;
+};
 
 class IOcadWriter
 {
@@ -11,3 +19,4 @@ public:
 	virtual int writeFile(const char * name) = 0;
 };
 IOcadWriter* OcadWriterFactory(double _offsetx, double _offsety, double _scale);
+#define ChkErr( expr ) { if (expr != 0) { return -1; } }

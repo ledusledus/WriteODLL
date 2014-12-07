@@ -163,7 +163,7 @@ int ocad_file_open(OCADFile **pfile, const char *filename) {
 	}
 	memset(file, 0, sizeof(OCADFile));
 	file->filename = (const char *)my_strdup(filename);
-	file->fd = open(file->filename, O_RDONLY | O_BINARY);
+	file->fd = _open(file->filename, O_RDONLY | O_BINARY);
 	if (file->fd <= 0) { err = -2; goto ocad_file_open_1; }
 	if (fstat(file->fd, &fs) < 0) { err = -3; goto ocad_file_open_1; }
 	file->size = fs.st_size;
@@ -179,7 +179,7 @@ int ocad_file_open(OCADFile **pfile, const char *filename) {
 	left = file->size;
 	p = file->buffer;
 	while (left > 0) {
-		int got = read(file->fd, p, left);
+		int got = _read(file->fd, p, left);
 		if (got <= 0) { fprintf(stderr,"got=%d sz=%d\n",got,file->size);err = -4; goto ocad_file_open_1; }
 		p += got; left -= got;
 	}
@@ -233,7 +233,7 @@ int ocad_file_close(OCADFile *pfile) {
 #else
 	if (pfile->buffer) free(pfile->buffer);
 #endif
-	if (pfile->fd) close(pfile->fd);
+	if (pfile->fd) _close(pfile->fd);
 	if (pfile->filename) free((void *)pfile->filename);
 	return 0;
 }
@@ -251,13 +251,13 @@ int ocad_file_save_as(OCADFile *pfile, const char *filename) {
 	// It saves to another file, without modifying the filename
 	int err = 0;
 	int got;
-	int fd = open(filename, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0664);
+	int fd = _open(filename, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0664);
 	if (fd < 0) { err = -2; goto ocad_file_save_as_0; }
-	got = write(fd, pfile->buffer, pfile->size);
+	got = _write(fd, pfile->buffer, pfile->size);
 	if (got != pfile->size) { err = -3; goto ocad_file_save_as_1; }
 
 ocad_file_save_as_1:
-	close(fd);
+	_close(fd);
 ocad_file_save_as_0:
 	return err;
 }

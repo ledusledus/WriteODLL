@@ -21,13 +21,6 @@ bool convertPascalString(const char *str, char *out, unsigned out_len)
 	return true;
 }
 
-struct point
-{
-	point(int _x, int _y) :x(_x), y(_y)
-	{}
-	int x, y;
-};
-
 u16 exportCoordinates( const vector<point> &points, OCADPoint** buffer )
 {
 	s16 num_points = 0;
@@ -149,7 +142,6 @@ IOcadWriter* OcadWriterFactory(double _offsetx, double _offsety, double _scale)
     return OcadWriter::Factory(_offsetx, _offsety, _scale );
 }
 
-#define ChkErr( expr ) { if (expr != 0) { return -1; } }
 int OcadWriter::Init()
 {
 	ChkErr( ocad_file_new(&file) );
