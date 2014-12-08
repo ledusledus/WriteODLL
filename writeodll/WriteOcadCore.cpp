@@ -160,6 +160,7 @@ int OcadWriter::Init()
 	header->ftype = 2;
 	header->major = 8;
 	header->minor = 0;
+	return 0;
 }
 int OcadWriter::addcolor(const char *name)
 {

@@ -3,8 +3,7 @@
 
 #include "stdafx.h"
 #include "WriteOcadCore.h"
-
-typedef void* ExportHandle;
+#include "writeodll.h"
 extern "C"
 {
 	__declspec(dllexport) ExportHandle __cdecl CreateOcadWriter(double _offsetx, double _offsety, double _scale)
@@ -29,6 +28,11 @@ extern "C"
 		vector<point> vect(poPoints, poPoints + coPoints);
 		return ((IOcadWriter*)ohandle)->exportArea(vect, symbol);
 	}
+	__declspec(dllexport) int __cdecl WriteOcadFile(ExportHandle ohandle, const char * name)
+	{
+		return ((IOcadWriter*)ohandle)->writeFile(name);
+	}
+
 }
 #if 0
 int doExport()
