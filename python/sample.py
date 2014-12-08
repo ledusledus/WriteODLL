@@ -3,16 +3,22 @@ from ctypes import *
 platform="x86"
 if sys.maxsize > 2**32:
     platform = "amd64"
+print platform 
 
-lib=cdll.LoadLibrary(platform+"\\writeodll.dll")
+lib=windll.LoadLibrary(platform+"\\writeodll.dll")
 
 class POINT(Structure):
     _fields_ = ("x", c_int), ("y", c_int)
 
 CreateOcadWriter=getattr(lib, "CreateOcadWriter") 
+CreateOcadWriter.restype=c_void_p
 CleanWriter=getattr(lib, "CleanWriter")
+CleanWriter.argtypes=[c_void_p]
+
 AddAreaSymbol=getattr(lib, "AddAreaSymbol") 
+AddAreaSymbol.argtypes=[c_void_p,c_char_p, c_int, c_int]
 AddColor=getattr(lib, "AddColor")
+AddColor.argtypes=[c_void_p,c_char_p]
 ExportArea=getattr(lib, "ExportArea") 
 WriteOcadFile=getattr(lib, "WriteOcadFile") 
 
@@ -32,4 +38,5 @@ re = ExportArea(h_writer, t, 3, 4010)
 
 WriteOcadFile(h_writer, c_char_p("c:\\projekti\\WriteODLL\\a.ocd"))
 CleanWriter(h_writer)
-#
+
+print "Success?"
