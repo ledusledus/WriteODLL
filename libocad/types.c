@@ -24,7 +24,7 @@
 
 char *my_strdup(const char *s) {
 	int size = strlen(s) + 1;
-	char *p = malloc(size);
+	char *p = (char*)malloc(size);
 	if (p) {
 		memcpy(p, s, size);
 	}

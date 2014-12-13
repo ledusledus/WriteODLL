@@ -115,19 +115,19 @@ int array_insert(PtrArray *array, u32 index, void *value) {
 	return 0;
 }
 
-int array_splice(PtrArray *array, u32 start, u32 delete, const void **data, u32 count) {
-	int ret = (count < delete) ?
-		array_remove_range(array, start, delete - count) :
-		array_shift(array, start, count - delete);
+int array_splice(PtrArray *array, u32 start, u32 _delete, const void **data, u32 count) {
+	int ret = (count < _delete) ?
+		array_remove_range(array, start, _delete - count) :
+		array_shift(array, start, count - _delete);
 	if (ret < 0) return ret;
 	memcpy(array->data + start, data, count * sizeof(void *));
 	return 0;
 }
 
-int array_splice_array(PtrArray *array, u32 start, u32 delete, const PtrArray *data, u32 pos, u32 count) {
+int array_splice_array(PtrArray *array, u32 start, u32 _delete, const PtrArray *data, u32 pos, u32 count) {
 	if (pos < 0) return -2;
 	if ((pos + count) >= data->size) return -2;
-	return array_splice(array, start, delete, (const void **)(data->data + pos), count);
+	return array_splice(array, start, _delete, (const void **)(data->data + pos), count);
 }
 
 

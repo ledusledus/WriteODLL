@@ -211,7 +211,6 @@ OCADObject *ocad_object_alloc(const OCADObject *source) {
 	return obj;
 }
 
-
 OCADObject *ocad_object_add(OCADFile *file, const OCADObject *object, OCADObjectEntry** out_entry) {
 	OCADObjectEntry *entry = ocad_object_entry_new(file, object->npts + object->ntext);
 	if (out_entry)

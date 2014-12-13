@@ -174,7 +174,7 @@ int ocad_file_open(OCADFile **pfile, const char *filename) {
 	if (file->buffer == NULL || file->buffer == MAP_FAILED) { err = -4; goto ocad_file_open_1; }
 #else
 	file->mapped = FALSE;
-	file->buffer = malloc(file->size);
+	file->buffer = (u8*)malloc(file->size);
 	if (file->buffer == NULL) { err = -1; goto ocad_file_open_1; }
 	left = file->size;
 	p = file->buffer;
@@ -329,7 +329,7 @@ int ocad_file_reserve(OCADFile *file, int amount) {
 	while (file->reserved_size - file->size < amount) {
 		file->reserved_size *= 2;
 	}
-	file->buffer = realloc(file->buffer, file->reserved_size);
+	file->buffer = (u8*)realloc(file->buffer, file->reserved_size);
 	
 	file->header = (OCADFileHeader*)(file->buffer + header_offset);
 	file->colors = (OCADColor*)(file->buffer + colors_offset);

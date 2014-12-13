@@ -40,6 +40,7 @@ int my_round (double x);
 #endif
 
 #ifdef _MSC_VER
+#include <Windows.h>
 	#include <io.h>
 	#define snprintf _snprintf
 #endif

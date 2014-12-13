@@ -197,6 +197,7 @@ int OcadWriter::exportArea(const vector<point>&area, int symbol)
 	OCADObjectEntry* entry;
 	ocad_object_add(file, ocad_object, &entry);
 	entry->npts = ocad_object->npts + ocad_object->ntext;
+	free(ocad_object); 
 	return 0;
 }
 

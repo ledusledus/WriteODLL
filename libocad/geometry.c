@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include "libocad.h"
 #include "geometry.h"
 
 // For some reason M_* constants aren't defined in c99 mode (-D__STRICT_ANSI__) under MinGW
